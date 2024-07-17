@@ -8,11 +8,10 @@ SRCS := $(wildcard *.cpp *.h)
 OBJECTS := $(patsubst src%,obj%, $(patsubst %.c,%.o, $(patsubst %.cpp,%.o,$(SRCS))))
 
 all: $(OBJECTS)
-	mkdir -p $(PREFIX)/obj
-	mv *.o $(PREFIX)/obj
+	g++ $(CXXFLAGS) -shared -Wl,-soname,libhikrender.so -o $(PREFIX)/libhikrender.so *.o
+
+install:
+	sudo cp $(PREFIX)/libhikrender.so /usr/lib
 
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDE) -c $< -o $@
-
-clean:
-	rm -rf obj
+	$(CXX) $(CXXFLAGS) -fPIC -c $< -o $@

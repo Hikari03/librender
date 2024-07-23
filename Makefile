@@ -19,10 +19,11 @@ SRCS := $(wildcard *.cpp *.h)
 OBJECTS := $(patsubst src%,obj%, $(patsubst %.c,%.o, $(patsubst %.cpp,%.o,$(SRCS))))
 
 
-dynamic: $(OBJECTS)
+dynamic:
+	@$(MAKE) all -j$(nproc) DYNAMIC="-fPIC" STATICLIBS=""
 	g++ $(CXXFLAGS) -shared -Wl,-soname,libhikrender.so -o $(PREFIX)/libhikrender.so *.o
 
-static: $(OBJECTS)
+static:
 	@if [ ! -d "ncurses-build" ]; then $(MAKE) custom_ncurses; fi
 	@$(MAKE) all -j$(nproc) STATICFLAG="-static -static-libgcc" INCLUDE="-I$(PWD)/ncurses-build" LIBPATH="-L$(PWD)/ncurses-build/lib" LIBS="$(STATICLIBS)"
 	ar rvs $(PREFIX)/libhikrender.a *.o ncurses-build/lib/libncursesw.a

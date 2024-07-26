@@ -25,7 +25,7 @@ dynamic:
 
 static:
 	@if [ ! -d "ncurses-build" ]; then $(MAKE) custom_ncurses; fi
-	@$(MAKE) all -j$(nproc) STATICFLAG="-static -static-libgcc" INCLUDE="-I$(PWD)/ncurses-build" LIBPATH="-L$(PWD)/ncurses-build/lib" LIBS="$(STATICLIBS)"
+	@$(MAKE) all -j$(nproc) STATICFLAG="-static -static-libgcc" INCLUDE="-I./ncurses-build" LIBPATH="-L./ncurses-build/lib" LIBS="$(STATICLIBS)"
 	ar rvs $(PREFIX)/libhikrender.a *.o ncurses-build/lib/libncursesw.a
 
 install:

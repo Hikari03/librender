@@ -9,11 +9,7 @@ LIBPATH :=
 LIBS := -lncursesw
 DYNAMIC := #-fPIC # -fPIC is needed for shared libraries
 
-ifeq ($(shell ldconfig -p | grep tinfo > /dev/null; echo $$? ),0)
-STATICLIBS :=-lncursesw -ltinfo
-else
 STATICLIBS :=-lncursesw -ltinfow
-endif
 
 SRCS := $(wildcard *.cpp *.h)
 OBJECTS := $(patsubst src%,obj%, $(patsubst %.c,%.o, $(patsubst %.cpp,%.o,$(SRCS))))
@@ -38,6 +34,7 @@ all: $(OBJECTS)
 
 clean:
 	rm -f $(PREFIX)/*.o $(PREFIX)/*.so $(PREFIX)/*.a
+	rm -rf ncurses-build
 
 custom_ncurses:
 	@if [ -d "ncurses-build" ]; then \

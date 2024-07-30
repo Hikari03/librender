@@ -1,6 +1,6 @@
 #pragma once
 
-#define color short
+using color = short;
 
 #include <vector>
 #include <memory>
